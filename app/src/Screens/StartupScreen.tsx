@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text } from 'react-native'
 import { Container } from '../Components'
 import Logo from '../Components/Logo'
@@ -8,6 +9,8 @@ import { AppNavigatorParamList } from '../Navigators/AppNavigator'
 type Props = NativeStackScreenProps<AppNavigatorParamList, 'Startup'>
 
 function StartupScreen({ navigation }: Props) {
+  const { t } = useTranslation()
+
   const init = async () => {
     await new Promise(resolve =>
       setTimeout(() => {
@@ -15,7 +18,10 @@ function StartupScreen({ navigation }: Props) {
       }, 1000)
     )
 
-    navigation.navigate('Main')
+    navigation.reset({
+      index: 0,
+      routes: [ { name: 'Main' } ]
+    })
   }
 
   useEffect(() => {
@@ -25,7 +31,7 @@ function StartupScreen({ navigation }: Props) {
   return (
     <Container style={styles.container}>
       <Logo />
-      <Text>Bem vindo!</Text>
+      <Text>{t('welcome')}</Text>
     </Container>
   )
 }
