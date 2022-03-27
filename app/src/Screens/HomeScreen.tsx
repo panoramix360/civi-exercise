@@ -1,15 +1,30 @@
 import React from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Text } from 'react-native'
-import { Container } from '../Components'
+import { FlatList } from 'react-native'
+import { Container, ListItem } from '../Components'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
+import { Message } from '../Types'
+import moment from 'moment'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Home'>
 
 function HomeScreen({}: Props) {
+  const mockList: Array<Message> = [
+    { id: 0, timestamp: 1648410775, subject: 'Assunto 01', detail: 'Detalhes da mensagem' },
+    { id: 1, timestamp: 16484107752, subject: 'Assunto 02', detail: 'Detalhes da mensagem' }
+  ]
+
+  const _renderItem = ({ item }: { item: Message }) => (
+    <ListItem subject={item.subject} date={moment(item.timestamp).format('DD/MM/YYYY HH:mm')} />
+  )
+
   return (
     <Container>
-      <Text>Home</Text>
+      <FlatList
+        keyExtractor={(item, index) => item.id.toString()}
+        data={mockList}
+        renderItem={_renderItem}
+      />
     </Container>
   )
 }
