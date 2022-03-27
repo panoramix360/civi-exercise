@@ -1,0 +1,1 @@
+export { default as pt_br } from './pt_br'
