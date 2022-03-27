@@ -4,7 +4,7 @@ import { FlatList } from 'react-native'
 import { Container, ListItem } from '../Components'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
 import { Message } from '../Types'
-import moment from 'moment'
+import Utils from '../Utils'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Home'>
 
@@ -15,7 +15,7 @@ function HomeScreen({ }: Props) {
   ]
 
   const _renderItem = ({ item }: { item: Message }) => (
-    <ListItem subject={item.subject} date={moment(item.timestamp).format('DD/MM/YYYY HH:mm')} isRead={item.isRead} />
+    <ListItem subject={item.subject} date={Utils.formatDate(item.timestamp)} isRead={item.isRead} />
   )
 
   return (

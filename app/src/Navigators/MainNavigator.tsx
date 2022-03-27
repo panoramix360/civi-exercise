@@ -14,7 +14,7 @@ function MainNavigator() {
   const { t } = useTranslation()
 
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Detail">
       <Stack.Screen name="Home" component={HomeScreen} options={{ title: t('homeTitle') }} />
       <Stack.Screen name="Detail" component={DetailScreen} />
     </Stack.Navigator>
