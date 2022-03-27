@@ -1,13 +1,14 @@
 import React, { ReactNode } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 type Props = {
+  style?: StyleProp<ViewStyle>,
   children: ReactNode
 }
 
-function Container({ children }: Props) {
+function Container({ style, children }: Props) {
   return (
-    <View style={styles.container}>
+    <View style={[ style, styles.container ]}>
       {children}
     </View>
   )
