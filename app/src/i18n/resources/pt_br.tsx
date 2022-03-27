@@ -1,3 +1,4 @@
 export default {
-  welcome: 'Bem vindo!'
+  welcome: 'Bem vindo!',
+  homeTitle: 'Mensagens',
 }
