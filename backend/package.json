@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "API to display messages",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint server.js lib"
+  },
+  "author": "Lucas Reis",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.12.0",
+    "jest": "^27.5.1"
+  }
+}
