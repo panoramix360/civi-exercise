@@ -5,6 +5,7 @@ import { StyleSheet, Text } from 'react-native'
 import { Container } from '../Components'
 import Logo from '../Components/Logo'
 import { AppNavigatorParamList } from '../Navigators/AppNavigator'
+import { Colors, FontSize } from '../Theme'
 
 type Props = NativeStackScreenProps<AppNavigatorParamList, 'Startup'>
 
@@ -31,7 +32,7 @@ function StartupScreen({ navigation }: Props) {
   return (
     <Container style={styles.container}>
       <Logo />
-      <Text>{t('welcome')}</Text>
+      <Text style={styles.text}>{t('welcome')}</Text>
     </Container>
   )
 }
@@ -40,7 +41,10 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fef231'
+    backgroundColor: Colors.primary
+  },
+  text: {
+    fontSize: FontSize.regular
   }
 })
 

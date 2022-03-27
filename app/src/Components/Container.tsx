@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Metrics } from '../Theme'
 
 type Props = {
   style?: StyleProp<ViewStyle>,
@@ -17,7 +18,8 @@ function Container({ style, children }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: Metrics.regular
   }
 }) 
 
