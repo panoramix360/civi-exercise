@@ -8,20 +8,20 @@ import moment from 'moment'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Home'>
 
-function HomeScreen({}: Props) {
+function HomeScreen({ }: Props) {
   const mockList: Array<Message> = [
-    { id: 0, timestamp: 1648410775, subject: 'Assunto 01', detail: 'Detalhes da mensagem' },
-    { id: 1, timestamp: 16484107752, subject: 'Assunto 02', detail: 'Detalhes da mensagem' }
+    { id: 0, timestamp: 1648410775, subject: 'Assunto 01', detail: 'Detalhes da mensagem', isRead: false },
+    { id: 1, timestamp: 16484107752, subject: 'Assunto 02', detail: 'Detalhes da mensagem', isRead: true }
   ]
 
   const _renderItem = ({ item }: { item: Message }) => (
-    <ListItem subject={item.subject} date={moment(item.timestamp).format('DD/MM/YYYY HH:mm')} />
+    <ListItem subject={item.subject} date={moment(item.timestamp).format('DD/MM/YYYY HH:mm')} isRead={item.isRead} />
   )
 
   return (
     <Container>
       <FlatList
-        keyExtractor={(item, index) => item.id.toString()}
+        keyExtractor={(item, _) => item.id.toString()}
         data={mockList}
         renderItem={_renderItem}
       />

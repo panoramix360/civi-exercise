@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, ImageResizeMode, StyleSheet, View } from 'react-native'
+import { Image, ImageResizeMode } from 'react-native'
 import { Images } from '../Theme'
 
 type Props = {

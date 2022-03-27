@@ -1,15 +1,18 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Colors, FontSize, Metrics } from '../Theme'
+import EnvelopIcon from './EnvelopIcon'
 
 type Props = {
   subject: string,
-  date: string
+  date: string,
+  isRead: boolean
 }
 
-function ListItem({ subject, date }: Props) {
+function ListItem({ subject, date, isRead }: Props) {
   return (
     <View style={styles.listItem}>
+      <EnvelopIcon isOpen={isRead} />
       <Text style={styles.subject}>{subject}</Text>
       <Text style={styles.date}>{date}</Text>
     </View>
