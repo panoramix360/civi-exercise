@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Container, Field } from '../Components'
 import MessageContext from '../Context'
+import { readMessage } from '../Context/actions'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
 import Utils from '../Utils'
 
@@ -13,9 +14,13 @@ function DetailScreen({ navigation }: Props) {
   const { t } = useTranslation()
 
   useEffect(() => {
-    navigation.setOptions({
-      title: state.lastMessageOpened?.subject
-    })
+    if (state.lastMessageOpened != null) {
+      navigation.setOptions({
+        title: state.lastMessageOpened.subject
+      })
+  
+      dispatch(readMessage(state.lastMessageOpened))
+    }
   }, [state.lastMessageOpened?.subject])
 
   return (

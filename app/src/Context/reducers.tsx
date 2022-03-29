@@ -22,13 +22,17 @@ export function reducer(state: MessageContextState, action: MessageActions) {
         lastMessageOpened: action.payload
       }
     case MessageTypes.ReadMessage:
+      const messageIndex = state.messages.findIndex((m) => m.id === action.payload.id)
+
+      const newMessagesList = [...state.messages]
+      const message = newMessagesList[messageIndex]
+      if (message) {
+        message.isRead = true
+      }
+
       return {
         ...state,
-        messages: state.messages.forEach((message, i) => {
-          if (action.payload.id === message.id) {
-            message.isRead = true
-          }
-        })
+        messages: newMessagesList
       }
     case MessageTypes.Fail:
       return {
