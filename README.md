@@ -4,9 +4,9 @@ This is my project for [Civi Exercise](https://github.com/diogo-correia-tec/civi
 
 # backend
 
-The backend is really simple since it's not the focus of the exercise, it is made using NodeJS + Express to keep it simple. It is using `body-parser` to parse JSON responses. It's using `Jest` for tests and `ESLint` to check static code.
+The backend is really simple since it's not the focus of the exercise, it is made using NodeJS + Express to keep it simple. It is using `body-parser` to parse JSON responses, `Jest` for tests and `ESLint` to check static code.
 
-The messages array are being created when the first client calls `/messages`, the array is keeped in memory only for simplicity.
+The messages array is being created when the first client calls `/messages`, the array is stored in memory only for simplicity.
 
 ### Ideas for improvements
 
@@ -57,3 +57,18 @@ The app is made using React Native + TypeScript.
 Error state of the `HomeScreen` when the request fails and let the user try again if necessary.
 
 <img width="308" alt="Screen Shot 2022-03-29 at 00 28 40" src="https://user-images.githubusercontent.com/2154092/160527406-6735b979-1c80-4d8a-8e1d-c1352de41e9a.png">
+
+### How to run the app with the backend
+
+The `backend` is runned with `npm start` and it's good to go, it will run on the following address: `http://localhost:3000`
+
+To run the app on `Android` just type `npm run android` on a terminal inside the `app` folder, if the API is not being reach you need to update the baseURL inside `app/Services/api.tsx` to `http://10.0.2.2:3000` since it represents localhost on Android emulators, if you are running on a physical device you will need to put the IP Address of your computer in the network.
+
+To run the app on `iOS` just type `npm run ios` on a terminal inside the `app` folder, if the API is not being reached you need to update the baseURL inside `app/Services/api.tsx` to `http://localhost:3000` since this works on iOS simulators, if you are running on a physical device you will need to put the IP Address of your computer in the network.
+
+### Ideas for improvements
+
+- Login and Register of new users
+- Possibility for the user to delete messages
+- Writing Unit Tests using Jest
+- Writing UI Tests
