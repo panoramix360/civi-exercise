@@ -1,12 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FlatList } from 'react-native'
 import { Container, ErrorState, ListItem, Loading } from '../Components'
 import MessageContext from '../Context'
 import { fetchMessages, setLastMessageOpened } from '../Context/actions'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
 import { Message } from '../Types'
-import Utils from '../Utils'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Home'>
 
@@ -37,7 +36,10 @@ function HomeScreen({ navigation }: Props) {
 
   if (state.error != null) {
     return (
-      <ErrorState error={state.error} />
+      <ErrorState
+        error={state.error}
+        onTryAgain={() => dispatch(fetchMessages())}
+      />
     )
   }
 
@@ -47,6 +49,8 @@ function HomeScreen({ navigation }: Props) {
         keyExtractor={(item, _) => item.id.toString()}
         data={state.messages}
         renderItem={_renderItem}
+        onRefresh={() => dispatch(fetchMessages())}
+        refreshing={state.loading}
       />
     </Container>
   )
