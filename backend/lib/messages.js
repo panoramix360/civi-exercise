@@ -4,7 +4,7 @@ let messagesDb = []
 const createMessage = (id, subject, detail) => {
   return {
     id,
-    timestamp: moment().subtract(id, 'hour').unix(),
+    timestamp: moment().subtract(id, 'hour').toDate().getTime(),
     subject,
     detail
   }
