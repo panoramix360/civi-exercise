@@ -16,6 +16,11 @@ export function reducer(state: MessageContextState, action: MessageActions) {
         loading: false,
         error: null
       }
+    case MessageTypes.SetLastMessageOpened:
+      return {
+        ...state,
+        lastMessageOpened: action.payload
+      }
     case MessageTypes.ReadMessage:
       return {
         ...state,

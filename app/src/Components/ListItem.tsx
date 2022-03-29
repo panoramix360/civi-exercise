@@ -1,21 +1,22 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { Colors, FontSize, Metrics } from '../Theme'
+import { Message } from '../Types'
+import Utils from '../Utils'
 import EnvelopIcon from './EnvelopIcon'
 
 type Props = {
-  subject: string,
-  date: string,
-  isRead: boolean
+  message: Message,
+  onPress: (message: Message) => void
 }
 
-function ListItem({ subject, date, isRead }: Props) {
+function ListItem({ message, onPress }: Props) {
   return (
-    <View style={styles.listItem}>
-      <EnvelopIcon isOpen={isRead} />
-      <Text style={styles.subject}>{subject}</Text>
-      <Text style={styles.date}>{date}</Text>
-    </View>
+    <TouchableOpacity style={styles.listItem} onPress={() => onPress(message)}>
+      <EnvelopIcon isOpen={message.isRead} />
+      <Text style={styles.subject}>{message.subject}</Text>
+      <Text style={styles.date}>{Utils.formatDate(message.timestamp)}</Text>
+    </TouchableOpacity>
   )
 }
 

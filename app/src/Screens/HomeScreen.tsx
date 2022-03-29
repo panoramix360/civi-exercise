@@ -3,14 +3,14 @@ import React, { useContext, useEffect } from 'react'
 import { FlatList } from 'react-native'
 import { Container, ErrorState, ListItem, Loading } from '../Components'
 import MessageContext from '../Context'
-import { fetchMessages } from '../Context/actions'
+import { fetchMessages, setLastMessageOpened } from '../Context/actions'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
 import { Message } from '../Types'
 import Utils from '../Utils'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Home'>
 
-function HomeScreen({ }: Props) {
+function HomeScreen({ navigation }: Props) {
   const { state, dispatch } = useContext(MessageContext)
 
   useEffect(() => {
@@ -18,8 +18,16 @@ function HomeScreen({ }: Props) {
   }, [])
 
   const _renderItem = ({ item }: { item: Message }) => (
-    <ListItem subject={item.subject} date={Utils.formatDate(item.timestamp)} isRead={item.isRead} />
+    <ListItem
+      message={item}
+      onPress={(message: Message) => onItemClick(message)}
+    />
   )
+
+  const onItemClick = (message: Message) => {
+    dispatch(setLastMessageOpened(message))
+    navigation.navigate('Detail')
+  }
 
   if (state.loading) {
     return (
