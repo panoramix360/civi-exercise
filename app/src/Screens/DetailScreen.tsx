@@ -1,35 +1,28 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Container, Field } from '../Components'
+import MessageContext from '../Context'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
-import { Message } from '../Types'
 import Utils from '../Utils'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Detail'>
 
 function DetailScreen({ navigation }: Props) {
+  const { state, dispatch } = useContext(MessageContext)
   const { t } = useTranslation()
-
-  const currentMessage: Message = {
-    id: 0,
-    timestamp: 1648410775,
-    subject: 'Assunto 01',
-    detail: 'Detalhes da mensagem para ver como fica quando tiver muita',
-    isRead: false
-  }
 
   useEffect(() => {
     navigation.setOptions({
-      title: currentMessage.subject
+      title: state.lastMessageOpened?.subject
     })
-  }, [currentMessage.subject])
+  }, [state.lastMessageOpened?.subject])
 
   return (
     <Container>
-      <Field name={t('date')} value={Utils.formatDate(currentMessage.timestamp)} />
+      <Field name={t('date')} value={Utils.formatDate(state.lastMessageOpened?.timestamp ?? 0)} />
 
-      <Field name={t('detail')} value={currentMessage.detail} />
+      <Field name={t('detail')} value={state.lastMessageOpened?.detail ?? ''} />
     </Container>
   )
 }

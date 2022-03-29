@@ -2,6 +2,7 @@ import { ActionMap, Message } from "../Types";
 
 export enum MessageTypes {
   SetMessages = 'SET_MESSAGES',
+  SetLastMessageOpened = 'SET_LAST_MESSAGE_OPENED',
   ReadMessage = 'READ_MESSAGE',
   Fail = 'FAIL',
   SetLoading = 'SET_LOADING'
@@ -9,6 +10,7 @@ export enum MessageTypes {
 
 type MessagePayload = {
   [MessageTypes.SetMessages]: Array<Message>;
+  [MessageTypes.SetLastMessageOpened]: Message;
   [MessageTypes.ReadMessage]: Message;
   [MessageTypes.Fail]: string;
   [MessageTypes.SetLoading]: boolean;
@@ -27,6 +29,10 @@ export type MessageAsyncActions = ActionMap<MessageAsyncPayload>[keyof ActionMap
 
 export const setMessages = (messages: Array<Message>): MessageActions => {
   return { type: MessageTypes.SetMessages, payload: messages }
+}
+
+export const setLastMessageOpened = (message: Message): MessageActions => {
+  return { type: MessageTypes.SetLastMessageOpened, payload: message }
 }
 
 export const readMessage = (message: Message): MessageActions => {

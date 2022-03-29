@@ -6,12 +6,14 @@ import { asyncActions, reducer } from './reducers'
 
 export type MessageContextState = {
   messages: Array<Message>,
+  lastMessageOpened: Message | null,
   loading: boolean,
   error: string | null
 }
 
 const initialState: MessageContextState = {
   messages: [],
+  lastMessageOpened: null,
   loading: false,
   error: null
 }
