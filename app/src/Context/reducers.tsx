@@ -55,8 +55,9 @@ export const asyncActions: AsyncActionHandlers<
   [MessageAsyncTypes.FetchMessages]: ({ dispatch }) => async () => {
     try {
       dispatch(setLoading(true))
-      const response: Array<Message> = await messagesApi.fetchMessages()
-      dispatch(setMessages(response))
+      const messages: Array<Message> = await messagesApi.fetchMessages()
+      messages.sort((a, b) => b.timestamp - a.timestamp)
+      dispatch(setMessages(messages))
     } catch (e) {
       dispatch(fail(i18next.t("basicError")))
     }
