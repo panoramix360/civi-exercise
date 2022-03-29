@@ -13,7 +13,8 @@ export function reducer(state: MessageContextState, action: MessageActions) {
       return {
         ...state,
         messages: action.payload,
-        loading: false
+        loading: false,
+        error: null
       }
     case MessageTypes.ReadMessage:
       return {
