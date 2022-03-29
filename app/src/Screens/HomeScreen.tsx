@@ -1,7 +1,9 @@
-import React from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import React, { useContext, useEffect } from 'react'
 import { FlatList } from 'react-native'
-import { Container, ListItem } from '../Components'
+import { Container, ErrorState, ListItem, Loading } from '../Components'
+import MessageContext from '../Context'
+import { fetchMessages } from '../Context/actions'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
 import { Message } from '../Types'
 import Utils from '../Utils'
@@ -9,20 +11,33 @@ import Utils from '../Utils'
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Home'>
 
 function HomeScreen({ }: Props) {
-  const mockList: Array<Message> = [
-    { id: 0, timestamp: 1648410775, subject: 'Assunto 01', detail: 'Detalhes da mensagem', isRead: false },
-    { id: 1, timestamp: 16484107752, subject: 'Assunto 02', detail: 'Detalhes da mensagem', isRead: true }
-  ]
+  const { state, dispatch } = useContext(MessageContext)
+
+  useEffect(() => {
+    dispatch(fetchMessages())
+  }, [])
 
   const _renderItem = ({ item }: { item: Message }) => (
     <ListItem subject={item.subject} date={Utils.formatDate(item.timestamp)} isRead={item.isRead} />
   )
 
+  if (state.loading) {
+    return (
+      <Loading />
+    )
+  }
+
+  if (state.error != null) {
+    return (
+      <ErrorState error={state.error} />
+    )
+  }
+
   return (
     <Container>
       <FlatList
         keyExtractor={(item, _) => item.id.toString()}
-        data={mockList}
+        data={state.messages}
         renderItem={_renderItem}
       />
     </Container>
