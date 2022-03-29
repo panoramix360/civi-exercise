@@ -3,5 +3,6 @@ export default {
   homeTitle: 'Mensagens',
   date: 'Data:',
   detail: 'Detalhes:',
-  basicError: 'Ocorreu um erro. Tente novamente.'
+  basicError: 'Ocorreu um erro.',
+  tryAgain: 'Tentar Novamente'
 }

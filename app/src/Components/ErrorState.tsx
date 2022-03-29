@@ -1,15 +1,20 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import { FontSize } from '../Theme'
 
 type Props = {
-  error: string
+  error: string,
+  onTryAgain: () => void
 }
 
-function Loading({ error }: Props) {
+function ErrorState({ error, onTryAgain }: Props) {
+  const { t } = useTranslation()
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{error}</Text>
+      <Button title={t('tryAgain')} onPress={onTryAgain} />
     </View>
   )
 }
@@ -26,4 +31,4 @@ const styles = StyleSheet.create({
   }
 }) 
 
-export default Loading
+export default ErrorState
