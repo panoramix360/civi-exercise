@@ -1,6 +1,4 @@
-# Civi Exercise
-
-This is my project for [Civi Exercise](https://github.com/diogo-correia-tec/civi-frontend-mobile-exercise)
+# Message App to training React Native Skills
 
 # backend
 
