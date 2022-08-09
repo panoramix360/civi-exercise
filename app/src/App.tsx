@@ -2,14 +2,16 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import AppNavigator from './Navigators/AppNavigator'
 import './i18n'
-import { MessageContextProvider } from './Context'
+import { Provider } from 'react-redux'
+import store from './store'
+
 
 function App() {
   return (
     <NavigationContainer>
-      <MessageContextProvider>
+      <Provider store={store}>
         <AppNavigator />
-      </MessageContextProvider>
+      </Provider>
     </NavigationContainer>
   )
 }

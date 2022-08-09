@@ -1,16 +1,17 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { FlatList } from 'react-native'
 import { Container, ErrorState, ListItem, Loading } from '../Components'
-import MessageContext from '../Context'
-import { fetchMessages, setLastMessageOpened } from '../Context/actions'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
+import { fetchMessages, selectMessages, setLastMessageOpened } from '../slices/messagesSlice'
+import { useAppDispatch, useAppSelector } from '../store'
 import { Message } from '../Types'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Home'>
 
 function HomeScreen({ navigation }: Props) {
-  const { state, dispatch } = useContext(MessageContext)
+  const { messages, loading, error } = useAppSelector(selectMessages)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(fetchMessages())
@@ -28,16 +29,16 @@ function HomeScreen({ navigation }: Props) {
     navigation.navigate('Detail')
   }
 
-  if (state.loading) {
+  if (loading) {
     return (
       <Loading />
     )
   }
 
-  if (state.error != null) {
+  if (error != null) {
     return (
       <ErrorState
-        error={state.error}
+        error={error}
         onTryAgain={() => dispatch(fetchMessages())}
       />
     )
@@ -47,10 +48,10 @@ function HomeScreen({ navigation }: Props) {
     <Container>
       <FlatList
         keyExtractor={(item, _) => item.id.toString()}
-        data={state.messages}
+        data={messages}
         renderItem={_renderItem}
         onRefresh={() => dispatch(fetchMessages())}
-        refreshing={state.loading}
+        refreshing={loading}
       />
     </Container>
   )

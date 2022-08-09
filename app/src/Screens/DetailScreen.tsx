@@ -1,33 +1,34 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Container, Field } from '../Components'
-import MessageContext from '../Context'
-import { readMessage } from '../Context/actions'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
+import { readMessage, selectMessages } from '../slices/messagesSlice'
+import { useAppDispatch, useAppSelector } from '../store'
 import Utils from '../Utils'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Detail'>
 
 function DetailScreen({ navigation }: Props) {
-  const { state, dispatch } = useContext(MessageContext)
+  const { lastMessageOpened, loading, error } = useAppSelector(selectMessages)
+  const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
   useEffect(() => {
-    if (state.lastMessageOpened != null) {
+    if (lastMessageOpened != null) {
       navigation.setOptions({
-        title: state.lastMessageOpened.subject
+        title: lastMessageOpened.subject
       })
   
-      dispatch(readMessage(state.lastMessageOpened))
+      dispatch(readMessage(lastMessageOpened))
     }
-  }, [state.lastMessageOpened?.subject])
+  }, [lastMessageOpened?.subject])
 
   return (
     <Container>
-      <Field name={t('date')} value={Utils.formatDate(state.lastMessageOpened?.timestamp ?? 0)} />
+      <Field name={t('date')} value={Utils.formatDate(lastMessageOpened?.timestamp ?? 0)} />
 
-      <Field name={t('detail')} value={state.lastMessageOpened?.detail ?? ''} />
+      <Field name={t('detail')} value={lastMessageOpened?.detail ?? ''} />
     </Container>
   )
 }
