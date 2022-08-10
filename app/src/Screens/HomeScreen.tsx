@@ -3,18 +3,20 @@ import React, { useEffect } from 'react'
 import { FlatList } from 'react-native'
 import { Container, ErrorState, ListItem, Loading } from '../Components'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
-import { fetchMessages, selectMessages, setLastMessageOpened } from '../slices/messagesSlice'
+import { fetchMessagesAsync, selectMessagesState, selectRecentMessages, setLastMessageOpened } from '../slices/messagesSlice'
 import { useAppDispatch, useAppSelector } from '../store'
 import { Message } from '../Types'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Home'>
 
 function HomeScreen({ navigation }: Props) {
-  const { messages, loading, error } = useAppSelector(selectMessages)
   const dispatch = useAppDispatch()
 
+  const { loading, error } = useAppSelector(selectMessagesState)
+  const messages = useAppSelector(selectRecentMessages)
+
   useEffect(() => {
-    dispatch(fetchMessages())
+    dispatch(fetchMessagesAsync())
   }, [])
 
   const _renderItem = ({ item }: { item: Message }) => (
@@ -39,7 +41,7 @@ function HomeScreen({ navigation }: Props) {
     return (
       <ErrorState
         error={error}
-        onTryAgain={() => dispatch(fetchMessages())}
+        onTryAgain={() => dispatch(fetchMessagesAsync())}
       />
     )
   }
@@ -50,7 +52,7 @@ function HomeScreen({ navigation }: Props) {
         keyExtractor={(item, _) => item.id.toString()}
         data={messages}
         renderItem={_renderItem}
-        onRefresh={() => dispatch(fetchMessages())}
+        onRefresh={() => dispatch(fetchMessagesAsync())}
         refreshing={loading}
       />
     </Container>

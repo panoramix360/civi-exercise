@@ -3,14 +3,14 @@ import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Container, Field } from '../Components'
 import { MainNavigatorParamList } from '../Navigators/MainNavigator'
-import { readMessage, selectMessages } from '../slices/messagesSlice'
+import { readMessage, selectMessagesState } from '../slices/messagesSlice'
 import { useAppDispatch, useAppSelector } from '../store'
 import Utils from '../Utils'
 
 type Props = NativeStackScreenProps<MainNavigatorParamList, 'Detail'>
 
 function DetailScreen({ navigation }: Props) {
-  const { lastMessageOpened, loading, error } = useAppSelector(selectMessages)
+  const { lastMessageOpened } = useAppSelector(selectMessagesState)
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
 

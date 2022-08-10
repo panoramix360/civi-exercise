@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import i18next from "i18next"
 import { messagesApi } from "../Services/routes"
 import { RootState } from "../store"
@@ -18,13 +18,9 @@ const initialState: MessagesState = {
   error: undefined
 }
 
-export const fetchMessages = createAsyncThunk(
-  'messages/fetchMessages',
-  async () => {
-    const messages: Message[] = await messagesApi.fetchMessages()
-    messages.sort((a, b) => b.timestamp - a.timestamp)
-    return messages
-  }
+export const fetchMessagesAsync = createAsyncThunk(
+  'messages/fetchMessagesAsync',
+  async () => (await messagesApi.fetchMessages())
 )
 
 export const messagesSlice = createSlice({
@@ -42,15 +38,15 @@ export const messagesSlice = createSlice({
     }
   },
   extraReducers: builder => {
-    builder.addCase(fetchMessages.pending, (state, _) => {
+    builder.addCase(fetchMessagesAsync.pending, (state, _) => {
       state.loading = true
     })
-    builder.addCase(fetchMessages.fulfilled, (state, action) => {
+    builder.addCase(fetchMessagesAsync.fulfilled, (state, action) => {
       state.messages = action.payload
       state.loading = false
       state.error = undefined
     })
-    builder.addCase(fetchMessages.rejected, (state, action) => {
+    builder.addCase(fetchMessagesAsync.rejected, (state, action) => {
       if (action.error) {
         console.log(action.error)
         state.error = i18next.t("basicError")
@@ -60,7 +56,12 @@ export const messagesSlice = createSlice({
   }
 })
 
-export const selectMessages = (state: RootState) => state.messages
+export const selectMessagesState = (state: RootState) => state.messages
+
+const selectMessagesList = (state: RootState) => state.messages.messages
+export const selectRecentMessages = createSelector(selectMessagesList, (messages) => (
+  [...messages].sort((a, b) => b.timestamp - a.timestamp)
+))
 
 export const { setLastMessageOpened, readMessage } = messagesSlice.actions
 
